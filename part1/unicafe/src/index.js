@@ -1,9 +1,19 @@
 import React, { useState } from 'react'
 import ReactDOM from 'react-dom'
 
+const Button = ({ handleClick, text }) => {
+  return <button onClick={handleClick}>{text}</button>
+}
+
+const Display = (props) => {
+  return (
+    <div>{props.text} {props.value}</div>
+  )
+}
+
 const App = () => {
-  const [bad, setbad] = useState(0)
   const [good, setGood] = useState(0)
+  const [bad, setbad] = useState(0)
   const [neutral, setNeutral] = useState(0)
 
   const increasegoodByOne = () => setGood(good + 1)
@@ -12,35 +22,35 @@ const App = () => {
 
 
 
-  const Display2 = ({ good }) => {
-    return (
-      <div>Good {good}</div>
-    )
-  }
-  const Display3 = ({ neutral }) => {
-    return (
-      <div>Neutral {neutral}</div>
-    )
-  }
-  const Display1 = ({ bad }) => {
-    return (
-      <div>bad {bad}</div>
-    )
-  }
+
 
   return (
     <div>
       <h1>Give feedback!!!</h1>
 
-      <button onClick={increasegoodByOne}>Good</button>
-      <button onClick={increaseByneutral}> Netural</button>
-      <button onClick={increasebadByOne}>Bad</button>
+      <Button handleClick={increasegoodByOne} text='good' />
+      <Button handleClick={increasebadByOne} text='bad' />
+      <Button handleClick={increaseByneutral} text='neutral' />
       <h1>Statistics...</h1>
 
-      <Display2 good={good} />
-      <Display1 bad={bad} />
-      <Display3 neutral={neutral} />
+      <Display text='good' value={good} />
+      <Display text='neutral' value={neutral} />
+      <Display text='bad' value={bad} />
+      <StatisticsValue />
     </div>
+  )
+}
+const StatisticsValue = ({ good, bad, neutral }) => {
+  const all = good + bad + neutral
+  const average = (good - bad) / all
+  const positive = (good / all) * 100
+  return (
+    <div>
+      <p>All {all}</p>
+      <p>average {average}</p>
+      <p>positive {positive}</p>
+    </div>
+
   )
 }
 
