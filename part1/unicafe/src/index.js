@@ -11,10 +11,13 @@ const Display = (props) => {
   )
 }
 
+
+
 const App = () => {
   const [good, setGood] = useState(0)
   const [bad, setbad] = useState(0)
   const [neutral, setNeutral] = useState(0)
+  const all = good + bad + neutral
 
   const increasegoodByOne = () => setGood(good + 1)
   const increasebadByOne = () => setbad(bad + 1)
@@ -32,27 +35,34 @@ const App = () => {
       <Button handleClick={increasebadByOne} text='bad' />
       <Button handleClick={increaseByneutral} text='neutral' />
       <h1>Statistics...</h1>
+      <StatisticsValue good={good} bad={bad} neutral={neutral} all={good + bad + neutral} positive={(good / all) * 100} average={good - bad / all} />
 
-      <Display text='good' value={good} />
-      <Display text='neutral' value={neutral} />
-      <Display text='bad' value={bad} />
-      <StatisticsValue />
+
     </div>
   )
 }
-const StatisticsValue = ({ good, bad, neutral }) => {
-  const all = good + bad + neutral
-  const average = (good - bad) / all
-  const positive = (good / all) * 100
+const StatisticsValue = (props) => {
+
+  if (props.all === 0) {
+    return (
+      <p>No feedback given</p>
+    )
+  }
+
   return (
     <div>
-      <p>All {all}</p>
-      <p>average {average}</p>
-      <p>positive {positive}</p>
+      <p>good {props.good}</p>
+      <p>bad {props.bad}</p>
+      <p>neutral {props.neutral}</p>
+      <p>all {props.all}</p>
+      <p>average {props.average}</p>
+      <p>positive {props.positive}</p>
+
     </div>
 
   )
 }
+
 
 ReactDOM.render(<App />, document.getElementById('root')
 )
