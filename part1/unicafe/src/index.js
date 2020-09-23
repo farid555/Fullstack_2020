@@ -5,12 +5,6 @@ const Button = ({ handleClick, text }) => {
   return <button onClick={handleClick}>{text}</button>
 }
 
-const Display = (props) => {
-  return (
-    <div>{props.text} {props.value}</div>
-  )
-}
-
 
 
 const App = () => {
@@ -51,17 +45,23 @@ const StatisticsValue = (props) => {
 
   return (
     <div>
-      <p>good {props.good}</p>
-      <p>bad {props.bad}</p>
-      <p>neutral {props.neutral}</p>
-      <p>all {props.all}</p>
-      <p>average {props.average}</p>
-      <p>positive {props.positive}</p>
+
+      <Statistic text='good ' value={props.good} />
+      <Statistic text='bad ' value={props.bad} />
+      <Statistic text='neutral ' value={props.neutral} />
+      <Statistic text='all ' value={props.good + props.bad + props.neutral} />
+      <Statistic text='average ' value={props.good - props.bad / props.all} />
+      <Statistic text='positive ' value={(props.good / props.all) * 100 + '%'} />
 
     </div>
 
   )
 }
+const Statistic = (props) => (
+
+  <div>{props.text}{props.value}</div>
+
+)
 
 
 ReactDOM.render(<App />, document.getElementById('root')
