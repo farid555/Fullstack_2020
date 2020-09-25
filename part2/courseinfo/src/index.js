@@ -58,8 +58,8 @@ const Total = (props) => {
   console.log(props)
   return (
     <div>
-      <p><b>Number of exercises {props.course.parts[0].exercises +
-        props.course.parts[1].exercises + props.course.parts[2].exercises + props.course.parts[3].exercises} </b></p>
+      <p><b>total of  {props.course.parts[0].exercises +
+        props.course.parts[1].exercises + props.course.parts[2].exercises + props.course.parts[3].exercises} exercises </b></p>
     </div>
   )
 }
