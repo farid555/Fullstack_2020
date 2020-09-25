@@ -45,25 +45,35 @@ const StatisticsValue = (props) => {
 
   return (
     <div>
+      <table>
 
-      <Statistic text='good ' value={props.good} />
-      <Statistic text='bad ' value={props.bad} />
-      <Statistic text='neutral ' value={props.neutral} />
-      <Statistic text='all ' value={props.good + props.bad + props.neutral} />
-      <Statistic text='average ' value={props.good - props.bad / props.all} />
-      <Statistic text='positive ' value={(props.good / props.all) * 100 + '%'} />
-
+        <thead>
+          <tr>
+            <td><Statistic text='good' /></td><td><Statistic value={props.good} /></td>
+          </tr><tr>
+            <td> <Statistic text='bad' /></td><td><Statistic value={props.bad} /></td>
+          </tr><tr>
+            <td><Statistic text='neutral' /></td><td><Statistic value={props.neutral} /></td>
+          </tr><tr>
+            <td> <Statistic text='all' /> </td><td><Statistic value={props.good + props.bad + props.neutral} /></td>
+          </tr><tr>
+            <td><Statistic text='average' /></td><td> <Statistic value={props.good - props.bad / props.all} /></td>
+          </tr><tr>
+            <td><Statistic text='positive' /></td><td><Statistic value={(props.good / props.all) * 100 + ' %'} /></td>
+          </tr>
+        </thead>
+      </table>
     </div>
-
   )
 }
-const Statistic = (props) => (
+const Statistic = (props) => {
+  return (
+    <div>
+      {props.text}{props.value}
+    </div>
+  )
+}
 
-  <div>{props.text}{props.value}</div>
 
-)
-
-
-ReactDOM.render(<App />, document.getElementById('root')
-)
+ReactDOM.render(<App />, document.getElementById('root'))
 
