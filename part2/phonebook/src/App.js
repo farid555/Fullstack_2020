@@ -14,10 +14,14 @@ const App = () => {
     console.log('button cliked', event.target)
     const noteObject = {
       content: newName,
-
+      date: new Date().toISOString(),
+      important: Math.random() < 0.5,
+      id: persons.length + 1,
     }
 
-    setPersons(persons.concat(noteObject))
+    if (persons.some(note =>
+      note.content === newName)) { window.alert('${newName} is already added to phonebook') }
+    else { setPersons(persons.concat(noteObject)) }
     setNewName('')
     console.log('button cliked', event.target)
   }
