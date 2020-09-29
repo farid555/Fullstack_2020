@@ -2,11 +2,15 @@ import React, { useState } from 'react'
 
 const App = () => {
   const [persons, setPersons] = useState([
-    { content: 'Arto Hellas', numb: '000' },
+    { content: 'Arto Hellas', numb: '040-123456' },
+    { content: 'Ada Lovelace', numb: '39-44-5323523' },
+    { content: 'Dan Abramov', numb: '12-43-234345' },
+    { content: 'Mary Poppendieck', numb: '39-23-6423122' }
   ])
+
   const [newName, setNewName] = useState('')
   const [newNumber, setNewNumber] = useState('')
-
+  const [filterName, filter] = useState('')
 
 
 
@@ -31,15 +35,20 @@ const App = () => {
     setPersons(persons.concat(noteObject))
     setNewName('')
     setNewNumber('')
+
   }
 
-  const handleNoteaChange = (event) => {
+  const handleChangename = (event) => {
     console.log(event.target.value)
     setNewName(event.target.value)
   }
-  const handleNotebChange = (event) => {
+  const handleChangenumber = (event) => {
     console.log(event.target.value)
     setNewNumber(event.target.value)
+  }
+  const handlefilterChange = (event) => {
+    console.log(event.target.value)
+    filter(event.target.value)
   }
 
 
@@ -48,8 +57,10 @@ const App = () => {
       <h2>Phonebook</h2>
       <form onSubmit={addInfo}>
         <div>
-          name: <input value={newName} onChange={handleNoteaChange} />
-          <div> number: <input value={newNumber} onChange={handleNotebChange} /> </div>
+          <div> filter shown with <input value={filterName} onChange={handlefilterChange} /> </div>
+          <h2>add a new</h2>
+          content: <input value={filterName} onChange={handleChangename} />
+          <div> numb: <input value={newNumber} onChange={handleChangenumber} /> </div>
         </div>
         <div>
           <button type="submit">add</button>
@@ -58,15 +69,14 @@ const App = () => {
       <h2>Numbers</h2>
 
       <div>
-        <ul>
 
-          {persons.map(note =>
-            <div key={note.content}> {note.content} {note.numb}
-            </div>
 
-          )}
+        {persons.filter(note => note.content.toLowerCase().includes(filterName.toLowerCase())).map(note => <div key={note.content}> {note.content} {note.numb}
+        </div>
 
-        </ul>
+        )}
+
+
 
       </div>
 
