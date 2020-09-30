@@ -1,36 +1,44 @@
-import React, { useState } from 'react'
+import React, { useState, useEffect } from 'react'
+import axios from 'axios'
 import Filter from './Components/Filter'
 import PersonForm from './Components/PersonForm'
 import Persons from './Components/Persons'
 
 
-const App = () => {
-  const [persons, setPersons] = useState([
-    { content: 'Arto Hellas', numb: '040-123456' },
-    { content: 'Ada Lovelace', numb: '39-44-5323523' },
-    { content: 'Dan Abramov', numb: '12-43-234345' },
-    { content: 'Mary Poppendieck', numb: '39-23-6423122' }
-  ])
 
+
+const App = () => {
+  const [persons, setPersons] = useState([])
   const [newName, setNewName] = useState('')
   const [newNumber, setNewNumber] = useState('')
   const [filterName, setNewfilter] = useState('')
 
+  const hook = () => {
+    console.log('effect')
+    axios
+      .get('http://localhost:3001/persons')
+      .then(response => {
+        console.log('promise fulfilled')
+        setPersons(response.data)
+      })
+  }
+
+  useEffect(hook, [])
 
 
   const addInfo = (event) => {
     event.preventDefault()
     console.log('button cliked', event.target)
     const noteObject = {
-      content: newName,
-      numb: newNumber,
+      name: newName,
+      number: newNumber,
       /*  date: new Date().toISOString(),
         important: Math.random() < 0.5,
       id: persons.length + 1,*/
     }
 
     if (persons.some(note =>
-      note.content === newName)) {
+      note.name === newName)) {
       window.alert(`${newName} is already added to phonebook`)
       return
     }
@@ -63,7 +71,7 @@ const App = () => {
       <h2>Add new number</h2>
 
       <PersonForm
-        addInfo={addInfo} handleChangename={handleChangename} handleChangenumber={handleChangenumber} content={newName} numb={newNumber} />
+        addInfo={addInfo} handleChangename={handleChangename} handleChangenumber={handleChangenumber} name={newName} number={newNumber} />
       <h2>Numbers</h2>
 
       <Persons persons={persons} filterName={filterName} />

@@ -1,13 +1,20 @@
 import React from 'react';
+import axios from 'axios'
 import ReactDOM from 'react-dom';
 import './index.css';
 import App from './App';
 import * as serviceWorker from './serviceWorker';
 
+const promise = axios.get('http://localhost:3001/persons')
+
+promise.then(response => {
+  console.log(response)
+})
+
+
 ReactDOM.render(
-  <React.StrictMode>
-    <App />
-  </React.StrictMode>,
+
+  <App />,
   document.getElementById('root')
 );
 
