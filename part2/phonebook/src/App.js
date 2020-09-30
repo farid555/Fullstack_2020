@@ -1,4 +1,8 @@
 import React, { useState } from 'react'
+import Filter from './Components/Filter'
+import PersonForm from './Components/PersonForm'
+import Persons from './Components/Persons'
+
 
 const App = () => {
   const [persons, setPersons] = useState([
@@ -10,7 +14,7 @@ const App = () => {
 
   const [newName, setNewName] = useState('')
   const [newNumber, setNewNumber] = useState('')
-  const [filterName, filter] = useState('')
+  const [filterName, setNewfilter] = useState('')
 
 
 
@@ -20,18 +24,17 @@ const App = () => {
     const noteObject = {
       content: newName,
       numb: newNumber,
-      date: new Date().toISOString(),
-      important: Math.random() < 0.5,
-      id: persons.length + 1,
+      /*  date: new Date().toISOString(),
+        important: Math.random() < 0.5,
+      id: persons.length + 1,*/
     }
 
     if (persons.some(note =>
-      note.content === newName)) { window.alert(`${newName} is already added to phonebook`) }
-    else {
-      setPersons(persons.concat(noteObject))
-      setNewName('')
-      console.log('button cliked', event.target)
+      note.content === newName)) {
+      window.alert(`${newName} is already added to phonebook`)
+      return
     }
+
     setPersons(persons.concat(noteObject))
     setNewName('')
     setNewNumber('')
@@ -48,39 +51,32 @@ const App = () => {
   }
   const handlefilterChange = (event) => {
     console.log(event.target.value)
-    filter(event.target.value)
+    setNewfilter(event.target.value)
   }
 
 
   return (
     <div>
       <h2>Phonebook</h2>
-      <form onSubmit={addInfo}>
-        <div>
-          <div> filter shown with <input value={filterName} onChange={handlefilterChange} /> </div>
-          <h2>add a new</h2>
-          content: <input value={filterName} onChange={handleChangename} />
-          <div> numb: <input value={newNumber} onChange={handleChangenumber} /> </div>
-        </div>
-        <div>
-          <button type="submit">add</button>
-        </div>
-      </form>
+      <Filter
+        value={filterName} handlefilterChange={handlefilterChange} />
+      <h2>Add new number</h2>
+
+      <PersonForm
+        addInfo={addInfo} handleChangename={handleChangename} handleChangenumber={handleChangenumber} content={newName} numb={newNumber} />
       <h2>Numbers</h2>
 
-      <div>
-
-
-        {persons.filter(note => note.content.toLowerCase().includes(filterName.toLowerCase())).map(note => <div key={note.content}> {note.content} {note.numb}
-        </div>
-
-        )}
+      <Persons persons={persons} filterName={filterName} />
 
 
 
-      </div>
+
+
+
 
     </div>
+
+
   )
 }
 
