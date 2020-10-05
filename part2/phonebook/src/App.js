@@ -50,6 +50,15 @@ const App = () => {
 
     }
   }
+  const persondelete = (id) => {
+    servicepersons
+      .cancel(id)
+      .then(response => {
+        const dele = persons.filter(note => id !== note.id)
+        setPersons(dele)
+      })
+
+  }
 
   const handleChangename = (event) => {
     console.log(event.target.value)
@@ -76,7 +85,7 @@ const App = () => {
         addInfo={addInfo} handleChangename={handleChangename} handleChangenumber={handleChangenumber} name={newName} number={newNumber} />
       <h2>Numbers</h2>
 
-      <Persons persons={persons} filterName={filterName} />
+      <Persons persons={persons} filterName={filterName} persondelete={persondelete} />
 
     </div>
 

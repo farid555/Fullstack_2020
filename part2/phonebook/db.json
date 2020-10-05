@@ -19,65 +19,6 @@
       "name": "Mary Poppendieck",
       "number": "39-23-6423122",
       "id": 4
-    },
-    {
-      "name": "farid",
-      "number": "23234",
-      "id": 5
-    },
-    {
-      "name": "Masum",
-      "number": "0727287",
-      "id": 6
-    },
-    {
-      "name": "Hello World",
-      "number": "999",
-      "date": "2020-10-04T19:21:35.300Z",
-      "important": false,
-      "id": 7
-    },
-    {
-      "name": "",
-      "number": "",
-      "date": "2020-10-04T19:23:31.016Z",
-      "important": true,
-      "id": 8
-    },
-    {
-      "name": "",
-      "number": "",
-      "date": "2020-10-04T19:23:31.427Z",
-      "important": false,
-      "id": 9
-    },
-    {
-      "name": "farid",
-      "number": "897679",
-      "date": "2020-10-04T19:23:57.298Z",
-      "important": false,
-      "id": 10
-    },
-    {
-      "name": "tfufu",
-      "number": "7968786",
-      "date": "2020-10-04T19:24:25.943Z",
-      "important": false,
-      "id": 11
-    },
-    {
-      "name": "knln",
-      "number": "7898",
-      "date": "2020-10-04T19:24:59.247Z",
-      "important": false,
-      "id": 12
-    },
-    {
-      "name": "sfsd",
-      "number": "42324234",
-      "date": "2020-10-05T06:35:32.675Z",
-      "important": true,
-      "id": 13
     }
   ]
 }
