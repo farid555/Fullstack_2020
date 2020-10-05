@@ -10,6 +10,7 @@ const App = () => {
   const [newName, setNewName] = useState('')
   const [newNumber, setNewNumber] = useState('')
   const [filterName, setNewfilter] = useState('')
+  const [errormessage, setErrorMessage] = useState(['', false])
 
   useEffect(() => {
     servicepersons
@@ -51,12 +52,23 @@ const App = () => {
     }
   }
   const persondelete = (id) => {
-    servicepersons
-      .cancel(id)
-      .then(response => {
-        const dele = persons.filter(note => id !== note.id)
-        setPersons(dele)
-      })
+    const person = persons.find(note => note.id === id)
+    if (window.confirm(`Sure you wanna delete ${person.name}?`))
+      servicepersons
+        .cancel(id)
+        .then(() => {
+          setErrorMessage(`${person.content} was deleted from phonebook!`, false)
+          setTimeout(() => {
+            setErrorMessage([``, false])
+          }, 5000)
+          setPersons(persons.filterName(note => id !== note.id))
+        }).catch(error => {
+          setErrorMessage([`Person ${person.name} has already been deleted from server`, true])
+          setTimeout(() => {
+            setErrorMessage([``, false])
+          }, 5000)
+          setPersons(persons.filter(note => id !== note.id))
+        })
 
   }
 
