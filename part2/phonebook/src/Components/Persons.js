@@ -8,7 +8,7 @@ const Persons = ({ persons, filterName, persondelete }) => {
     return (
 
         <div>
-            {filteringPersons.map(note => <li key={note.name}>{note.name}{note.num}<button onClick={() => persondelete(note.id)}>delete</button></li>)}
+            {filteringPersons.map(note => <li key={note.name}>{note.name} {note.number}<button onClick={() => persondelete(note.id)}>delete</button></li>)}
         </div>
 
 

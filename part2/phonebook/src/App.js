@@ -10,7 +10,7 @@ const App = () => {
   const [newName, setNewName] = useState('')
   const [newNumber, setNewNumber] = useState('')
   const [filterName, setNewfilter] = useState('')
-  const [errormessage, setErrorMessage] = useState(['', false])
+
 
   useEffect(() => {
     servicepersons
@@ -31,44 +31,44 @@ const App = () => {
       id: persons.length + 1,
     }
 
-    servicepersons
-      .create(noteObject)
-      .then(returnedNote => {
-        setPersons(persons.concat(returnedNote))
-        setNewName('')
-      })
+    if (persons.every((a) => a.name.toLowerCase() !== newName.toLowerCase())) {
 
-
-
-    if (persons.some(note =>
-      note.name === newName)) {
-      window.alert(`${newName} is already added to phonebook`)
+      servicepersons
+        .create(noteObject)
+        .then(returnedPerson => {
+          setPersons(persons.concat(returnedPerson))
+          setNewName('')
+          setNewNumber('')
+        })
     }
-    else {
-      setPersons(persons.concat(noteObject))
-      setNewName('')
-      setNewNumber('')
 
+    else if (window.confirm(`${newName} is already added to phonebook,
+    replace the old number with a new one?`)) {
+
+      updatePersons(noteObject)
     }
   }
+
+  const updatePersons = (person) => {
+    const identity = persons.find(w => w.name.toLowerCase() === person.name.toLowerCase()).id
+    person = { ...person, id: identity }
+    servicepersons
+      .update(identity, person)
+      .then(returnedPerson => {
+        setPersons(persons.map(w => w.id !== identity ? w : returnedPerson))
+        setNewName('')
+        setNewNumber('')
+      })
+  }
+
   const persondelete = (id) => {
     const person = persons.find(note => note.id === id)
-    if (window.confirm(`Sure you wanna delete ${person.name}?`))
+    if (window.confirm(`Sure you wanna delete ${person.name}?`)) {
       servicepersons
         .cancel(id)
-        .then(() => {
-          setErrorMessage(`${person.content} was deleted from phonebook!`, false)
-          setTimeout(() => {
-            setErrorMessage([``, false])
-          }, 5000)
-          setPersons(persons.filterName(note => id !== note.id))
-        }).catch(error => {
-          setErrorMessage([`Person ${person.name} has already been deleted from server`, true])
-          setTimeout(() => {
-            setErrorMessage([``, false])
-          }, 5000)
-          setPersons(persons.filter(note => id !== note.id))
-        })
+        .then()
+      setPersons(persons.filter(note => id !== note.id))
+    }
 
   }
 
