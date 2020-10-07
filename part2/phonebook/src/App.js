@@ -3,7 +3,7 @@ import Filter from './Components/Filter'
 import PersonForm from './Components/PersonForm'
 import Persons from './Components/Persons'
 import servicepersons from './services/persons'
-
+import './index.css'
 
 const App = () => {
   const [persons, setPersons] = useState([])
@@ -28,7 +28,6 @@ const App = () => {
       number: newNumber,
       date: new Date().toISOString(),
       important: Math.random() < 0.5,
-      id: persons.length + 1,
     }
 
     if (persons.every((a) => a.name.toLowerCase() !== newName.toLowerCase())) {
