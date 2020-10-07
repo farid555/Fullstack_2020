@@ -3,13 +3,17 @@ import Filter from './Components/Filter'
 import PersonForm from './Components/PersonForm'
 import Persons from './Components/Persons'
 import servicepersons from './services/persons'
+import Notifi from './Components/Notifi'
 import './index.css'
+
 
 const App = () => {
   const [persons, setPersons] = useState([])
   const [newName, setNewName] = useState('')
   const [newNumber, setNewNumber] = useState('')
   const [filterName, setNewfilter] = useState('')
+  const [message, setMessage] = useState(null)
+  const [error, setError] = useState(null)
 
 
   useEffect(() => {
@@ -20,6 +24,7 @@ const App = () => {
       })
   }, [])
 
+
   const addInfo = (event) => {
     event.preventDefault()
     console.log('button cliked', event.target)
@@ -28,19 +33,30 @@ const App = () => {
       number: newNumber,
       date: new Date().toISOString(),
       important: Math.random() < 0.5,
+
     }
 
-    if (persons.every((a) => a.name.toLowerCase() !== newName.toLowerCase())) {
-
+    if (persons.every((p) => p.name.toLowerCase() !== newName.toLowerCase())) {
       servicepersons
         .create(noteObject)
         .then(returnedPerson => {
           setPersons(persons.concat(returnedPerson))
           setNewName('')
           setNewNumber('')
+          //notification
+          setMessage(`Added ${returnedPerson.name}`)
+          setTimeout(() => {
+            setMessage(null)
+          }, 5000)
+        })
+        .catch(a => {
+          setError(a.response.data.error)
+          setTimeout(() => {
+            setError(null)
+          }, 5000);
         })
     }
-
+    //perseon already there
     else if (window.confirm(`${newName} is already added to phonebook,
     replace the old number with a new one?`)) {
 
@@ -49,27 +65,68 @@ const App = () => {
   }
 
   const updatePersons = (person) => {
+
     const identity = persons.find(w => w.name.toLowerCase() === person.name.toLowerCase()).id
     person = { ...person, id: identity }
     servicepersons
       .update(identity, person)
       .then(returnedPerson => {
-        setPersons(persons.map(w => w.id !== identity ? w : returnedPerson))
+        setPersons(persons.map(p => p.id !== identity ? p : returnedPerson))
         setNewName('')
         setNewNumber('')
+        // Notification
+        setMessage(`Updated ${returnedPerson.name}`)
+        setTimeout(() => {
+          setMessage(null)
+        }, 5000)
+      })
+
+      .catch(a => {
+        if (a.response.status === 400) {
+
+          setError(a.response.data.error)
+          setTimeout(() => {
+            setError(null)
+          }, 5000)
+        }
+
+        else {
+          setPersons(persons.filter(w => w.id !== identity))
+          setError(`Information of ${person.name} has already been removed from the server`)
+          setTimeout(() => {
+            setError(null)
+          }, 5000)
+          setNewName('')
+          setNewNumber('')
+        }
       })
   }
 
   const persondelete = (id) => {
-    const person = persons.find(note => note.id === id)
-    if (window.confirm(`Sure you wanna delete ${person.name}?`)) {
+    const person = persons.find(z => z.id === id)
+
+    if (window.confirm(`Delete ${person.name}?`)) {
       servicepersons
-        .cancel(id)
-        .then()
-      setPersons(persons.filter(note => id !== note.id))
+        .deleteEntry(id)
+        .then(ignored => {
+          setPersons(persons.filter(z => id !== z.id))
+          setMessage(`${person.name} deleted`)
+          setTimeout(() => {
+            setMessage(null)
+          }, 5000);
+        })
+        .catch(e => {
+          setError(`Information of ${person.name} has already been removed from the server`)
+          setTimeout(() => {
+            setError(null)
+          }, 5000)
+        })
+
     }
 
   }
+
+
 
   const handleChangename = (event) => {
     console.log(event.target.value)
@@ -88,8 +145,9 @@ const App = () => {
   return (
     <div>
       <h2>Phonebook</h2>
-      <Filter
-        value={filterName} handlefilterChange={handlefilterChange} />
+      <Notifi error={error} message={message} />
+      <Filter value={filterName} handlefilterChange={handlefilterChange} />
+
       <h2>Add new number</h2>
 
       <PersonForm
@@ -105,6 +163,8 @@ const App = () => {
 
 
 }
+
+
 
 
 

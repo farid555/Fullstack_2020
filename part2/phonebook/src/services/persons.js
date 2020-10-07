@@ -15,7 +15,7 @@ const update = (id, noteObject) => {
     const request = axios.put(`${baseUrl}/${id}`, noteObject)
     return request.then(response => response.data)
 }
-const cancel = (id) => {
+const deleteEntry = (id) => {
     const request = axios.delete(`${baseUrl}/${id}`)
     return request.then(response => response.data)
 }
@@ -24,5 +24,5 @@ export default {
     getAll: getAll,
     create: create,
     update: update,
-    cancel: cancel
+    deleteEntry: deleteEntry
 }
