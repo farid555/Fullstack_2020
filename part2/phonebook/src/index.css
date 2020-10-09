@@ -30,3 +30,8 @@ code {
   padding: 10px;
   margin-bottom: 10px;
 } 
+li {
+  color: rgb(58, 55, 55);
+  padding-top: 3px;
+  font-size: 15px;
+}

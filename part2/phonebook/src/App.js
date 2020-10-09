@@ -110,7 +110,7 @@ const App = () => {
         .deleteEntry(id)
         .then(ignored => {
           setPersons(persons.filter(z => id !== z.id))
-          setMessage(`${person.name} deleted`)
+          setMessage(`${person.name} was deleted`)
           setTimeout(() => {
             setMessage(null)
           }, 5000);
