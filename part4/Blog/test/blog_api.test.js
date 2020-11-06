@@ -3,25 +3,24 @@ const supertest = require('supertest')
 const app = require('../app')
 const api = supertest(app)
 const Blog = require('../models/blog')
-
-const testBlogs = [
+const initialBlogs = [
     {
-        title: 'test',
-        author: "The Name",
-        url: "www.address.com",
-        likes: 35
+        content: 'HTML is easy',
+        date: new Date(),
+        important: false,
     },
-
+    {
+        content: 'Browser can execute only Javascript',
+        date: new Date(),
+        important: true,
+    },
 ]
-
-
 beforeEach(async () => {
     await Blog.deleteMany({})
-
-    let blogObject = new Blog(testBlogs[0])
+    let blogObject = new Blog(initialBlogs[0])
     await blogObject.save()
-
-    blogObject = new Blog(testBlogs[1])
+    //jest.setTimeout(99999999)
+    blogObject = new Blog(initialBlogs[1])
     await blogObject.save()
 })
 
@@ -31,11 +30,12 @@ test('blogs are returned as json', async () => {
         .expect(200)
         .expect('Content-Type', /application\/json/)
 })
-
-test('all blogs are returned', async () => {
+test('correct amount of blogs', async () => {
     const response = await api.get('/api/blogs')
+
 })
 
 afterAll(() => {
     mongoose.connection.close()
-}) 
+
+})
