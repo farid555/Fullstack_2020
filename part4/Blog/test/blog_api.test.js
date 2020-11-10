@@ -5,14 +5,17 @@ const api = supertest(app)
 const Blog = require('../models/blog')
 const initialBlogs = [
     {
-        content: 'HTML is easy',
-        date: new Date(),
-        important: false,
+        title: 'test',
+        author: "The Name",
+        url: 'www.zaman.com',
+        likes: 34
     },
     {
-        content: 'Browser can execute only Javascript',
-        date: new Date(),
-        important: true,
+       
+        title: 'test2',
+        author: "The Name",
+        url: 'www.address.com',
+        likes: 44
     },
 ]
 beforeEach(async () => {
@@ -34,6 +37,12 @@ test('correct amount of blogs', async () => {
     const response = await api.get('/api/blogs')
 
 })
+test('unique identifier named id', async () => {
+    const response = await api.get('/api/blogs')
+    expect(response.body[0].id).toBeDefined()
+  
+  })
+  
 
 afterAll(() => {
     mongoose.connection.close()
