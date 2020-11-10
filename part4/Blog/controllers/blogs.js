@@ -35,11 +35,11 @@ response.json(savedBlog)
 
 
 
- blogsRouter.delete('/:id', (request, response, next) => {
-  Blog.findByIdAndRemove(request.params.id)
-    .then(() => {
+
+  
+    blogsRouter.delete('/:id', async (request, response) => {
+      await Blog.findByIdAndRemove(request.params.id)
       response.status(204).end()
-    })
-    .catch(error => next(error))
+    
 })
 module.exports = blogsRouter
