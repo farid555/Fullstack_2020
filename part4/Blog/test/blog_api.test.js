@@ -85,7 +85,22 @@ test('unique identifier named id', async () => {
 
    expect(blogs[initialBlogs.length].likes).toBe(0)
 })
-
+test('blog needs title and url', async () => {
+    const newBlog = {
+        author: "author"
+    }
+  
+    await api
+        .post('/api/blogs')
+        .send(newBlog)
+        .expect(400)
+  
+    const blogs = await Blog.find({})
+  
+    expect(blogs).toHaveLength(initialBlogs.length)
+  })
+  
+  
   
 
 afterAll(() => {
