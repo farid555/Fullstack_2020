@@ -12,7 +12,24 @@ usersRouter.get('/', async (request, response) => {
 
 usersRouter.post('/', async (request, response) => {
 
-    const body = request.body
+    const body = request.body 
+    if (body.username === undefined || body.username === null) {
+        return response.status(400).json({ error: 'Need to add username!!' })
+    }
+
+    if (body.password === undefined || body.password === null) {
+        return response.status(400).json({ error: 'Cant log in without a password!!' })
+    }
+
+    if (body.username.length < 3) {
+        return response.status(400).json({ error: 'Choose a longer username!!' })
+    }
+
+    if (body.password.length < 3) {
+        return response.status(400).json({ error: 'Choose a longer and safer password!!' })
+    }
+
+
 
     const saltRounds = 10
     const passwordHash = await bcrypt.hash(body.password, saltRounds)
