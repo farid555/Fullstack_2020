@@ -1,0 +1,10 @@
+POST http://localhost:3003/api/blogs
+Content-Type: application/json
+
+{
+  
+    "title": "F&N",
+    "author": "Future",
+    "url": "www.music.com",
+    "likes": "456"
+}
