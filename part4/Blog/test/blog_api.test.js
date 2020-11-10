@@ -42,6 +42,32 @@ test('unique identifier named id', async () => {
     expect(response.body[0].id).toBeDefined()
   
   })
+  test('a valid blog can be added', async () => {
+    const newBlog = {
+        title: 'valid blog',
+        author: "vb",
+        url: "www.validblog.com",
+        likes: 22
+    }
+
+    await api
+      .post('/api/blogs')
+      .send(newBlog)
+      .expect(200)
+      .expect('Content-Type', /application\/json/)
+
+    const blogs = await Blog.find({})
+
+    expect(blogs).toHaveLength(initialBlogs.length + 1)
+
+    const authors = blogs.map(aut => aut.author)
+
+    expect(authors).toContain(
+      newBlog.author
+    )
+
+
+  })
   
 
 afterAll(() => {
