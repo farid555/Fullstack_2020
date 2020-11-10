@@ -68,6 +68,24 @@ test('unique identifier named id', async () => {
 
 
   })
+  test('if no likes, default to 0', async () => {
+    const newBlog = {
+        title: 'blog with no likes',
+        author: "Bad Author",
+        url: "www.unlikeable.com",
+    }
+
+    await api
+        .post('/api/blogs')
+        .send(newBlog)
+        .expect(200)
+        .expect('Content-Type', /application\/json/)
+
+   const blogs = await Blog.find({})
+
+   expect(blogs[initialBlogs.length].likes).toBe(0)
+})
+
   
 
 afterAll(() => {
