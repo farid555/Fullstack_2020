@@ -117,6 +117,20 @@ test('blog needs title and url', async () => {
   
     expect(blog).not.toContain(blogToDelete.title)
   })
+  test('fails with status code 400 if data invalid', async () => {
+    const id = 'efsdretxed'
+  
+    const newBlog = {
+      likes: 23
+    }
+  
+    await api
+         .put(`/api/blogs/${id}`)
+         .send(newBlog)
+         .expect(400)
+  
+  })
+  
 
   
   
