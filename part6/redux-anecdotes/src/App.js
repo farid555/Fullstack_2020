@@ -5,15 +5,15 @@ import Notification from './components/Notification'
 
 import Filter from './components/Filter'
 import { useDispatch } from 'react-redux'
-import anecdotsService from './service/anecdotes'
+
 import { initializeAnecdotes } from './reducers/anecdoteReducer'
 
 const App = () => {
 
   const dispatch = useDispatch()
   useEffect(() => {
-    anecdotsService
-      .getAll().then(notes => dispatch(initializeAnecdotes(notes)))
+    dispatch(initializeAnecdotes())
+
   }, [dispatch])
 
 
