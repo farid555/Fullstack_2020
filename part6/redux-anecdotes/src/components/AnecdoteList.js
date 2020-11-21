@@ -8,6 +8,7 @@ const AnecdoteList = (props) => {
 
     const vote = (anecdote) => {
 
+
         props.voteVote(anecdote)
         props.displayNotification(`'${anecdote.content}' just got a vote!`, 5)
 
