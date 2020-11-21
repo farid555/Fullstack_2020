@@ -5,9 +5,6 @@ import { displayNotification } from '../reducers/notificationReducer'
 
 
 const AnecdoteList = (props) => {
-    //const anecdotes = useSelector(state => state.anecdotes)
-    //const dispatch = useDispatch()
-    //const filter = useSelector(state => state.filter)
 
     const vote = (anecdote) => {
 
@@ -17,7 +14,7 @@ const AnecdoteList = (props) => {
 
 
     }
-    //const undisplay = () => dispatch(undisplayNotification(''))
+
 
 
     const filteringAnecdotes = (filter, anecdotes) => {
