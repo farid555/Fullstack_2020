@@ -38,16 +38,16 @@ const Blog = ({ blog, updateBlog, deleteBlog, user }) => {
           <div>
             {blog.url}
           </div>
-          <div>
+          <div id='likes'>
             Likes {blog.likes}
-            <button onClick={() => { handleClick() }}>like</button>
+            <button id='like-button' onClick={() => { handleClick() }}>like</button>
           </div>
           <div>
             {blog.user.name}
           </div>
           {user.name === blog.user.name ?
             <div>
-              <button onClick={() => handleDeleteClick()}>Remove</button>
+              <button id='Remove-button' onClick={() => handleDeleteClick()}>Remove</button>
             </div>
             :
             null

@@ -21,7 +21,8 @@ const App = () => {
     blogService.getAll().then(blogs =>
       setBlogs(blogs)
     )
-  }, [])
+  },
+  [])
 
   useEffect(() => {
     const loggedUserJSON = window.localStorage.getItem('loggedBlogappUser')
@@ -70,7 +71,6 @@ const App = () => {
       .then(savedBlog => {
         setBlogs(blogs.concat(savedBlog))
         setMessage(`a new blog ${blogObject.title} by ${blogObject.author} added.`)
-
         setTimeout(() => {
           setMessage(null)
         }, 6000)
@@ -84,8 +84,8 @@ const App = () => {
         returnedBlog.user = blogToUpdate.user
         setBlogs(blogs.map(blog => blog.id !== id ? blog : returnedBlog))
       })
-      .catch(error => {
-        console.log("Something is wrong here!, error")
+      .catch(() => {
+        console.log('Something is wrong here!, error')
       })
 
   }
@@ -109,6 +109,8 @@ const App = () => {
   }
 
 
+
+
   if (user === null) {
     return (
       <div>
@@ -120,8 +122,7 @@ const App = () => {
           password={password}
           handleUsernameChange={({ target }) => setUsername(target.value)}
           handlePasswordChange={({ target }) => setPassword(target.value)}
-          handleSubmit={handleLogin}
-        />
+          handleSubmit={handleLogin} />
 
       </div>
     )
@@ -132,7 +133,7 @@ const App = () => {
       <h2>blogs</h2>
       <Notification message={message} errorMessage={errorMessage} />
       <p>{user.name} logged in
-      <button onClick={() => {
+        <button onClick={() => {
           window.localStorage.removeItem('loggedBlogappUser')
           setUser(null)
         }}>logout</button></p>
@@ -151,4 +152,4 @@ const App = () => {
     </div>
   )
 }
-export default App 
+export default App

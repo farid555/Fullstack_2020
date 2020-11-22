@@ -36,4 +36,4 @@ const erase = async (id) => {
 
 
 
-export default { getAll, create, setToken, update, erase } 
+export default { getAll, create, setToken, update, erase }
