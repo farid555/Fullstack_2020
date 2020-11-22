@@ -50,16 +50,13 @@ const App = () => {
       setPassword('')
     } catch (exception) {
       setErrorMessage('wrong username or password')
+      setUsername('')
+      setPassword('')
       setTimeout(() => {
         setErrorMessage(null)
       }, 5000)
     }
   }
-  const blogForm = () => (
-    <Togglable buttonLabel='New Blog' ref={blogFormRef}>
-      <BlogForm createBlog={addBlog} />
-    </Togglable>
-  )
 
   const addBlog = (blogObject) => {
     blogFormRef.current.toggleVisibility()
@@ -74,6 +71,20 @@ const App = () => {
         }, 6000)
       })
   }
+  const updateBlog = (id, blogObject) => {
+    const blogToUpdate = blogs.find(blog => blog.id === id)
+    blogService
+      .update(id, blogObject)
+      .then(returnedBlog => {
+        returnedBlog.user = blogToUpdate.user
+        setBlogs(blogs.map(blog => blog.id !== id ? blog : returnedBlog))
+      })
+      .catch(error => {
+        console.log("Something is wrong here!, error")
+      })
+
+  }
+
 
 
   if (user === null) {
@@ -81,15 +92,15 @@ const App = () => {
       <div>
 
         <Notification message={message} errorMessage={errorMessage} />
-        <Togglable buttonLabel='login'>
-          <LoginForm
-            username={username}
-            password={password}
-            handleUsernameChange={({ target }) => setUsername(target.value)}
-            handlePasswordChange={({ target }) => setPassword(target.value)}
-            handleSubmit={handleLogin}
-          />
-        </Togglable>
+
+        <LoginForm
+          username={username}
+          password={password}
+          handleUsernameChange={({ target }) => setUsername(target.value)}
+          handlePasswordChange={({ target }) => setPassword(target.value)}
+          handleSubmit={handleLogin}
+        />
+
       </div>
     )
   }
@@ -103,9 +114,15 @@ const App = () => {
           window.localStorage.removeItem('loggedBlogappUser')
           setUser(null)
         }}>logout</button></p>
-      {blogForm()}
+      <div>
+        <Togglable buttonLabel='New Blog' ref={blogFormRef}>
+          <BlogForm createBlog={addBlog} />
+        </Togglable>
+      </div>
       {blogs.map(blog =>
-        <Blog key={blog.id} blog={blog} />
+
+        <Blog key={blog.id} blog={blog}
+          updateBlog={updateBlog} />
       )}
     </div>
   )
