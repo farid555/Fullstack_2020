@@ -38,4 +38,25 @@ describe('Blog app', function () {
         })
     })
 
+
+    describe.only('When logged in', function () {
+        beforeEach(function () {
+            cy.get('#username').type('CyTe')
+            cy.get('#password').type('Centria')
+            cy.get('#login-button').click()
+        })
+
+        it('A blog can be created', function () {
+            cy.contains('New Blog').click()
+            cy.get('#title').type('A test blog')
+            cy.get('#author').type('tester.')
+            cy.get('#url').type('www.code.com')
+            cy.get('#create-button').click()
+
+            cy.contains('A test blog')
+            cy.contains('tester')
+
+        })
+    })
+
 })
