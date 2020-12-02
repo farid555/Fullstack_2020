@@ -4,11 +4,11 @@ import React from 'react';
 
 const Persons = ({ persons, filterName, persondelete }) => {
     const filteringPersons = persons
-        .filter(note => note.name.toLowerCase().includes(filterName.toLowerCase()))
+        .filter(persons => persons.name.toLowerCase().includes(filterName.toLowerCase()))
     return (
 
         <div>
-            {filteringPersons.map(note => <li key={note.name}>{note.name} {note.number}<button onClick={() => persondelete(note.id)}>delete</button></li>)}
+            {filteringPersons.map(persons => <li key={persons.name}>{persons.name} {persons.number}<button onClick={() => persondelete(persons.id)}>delete</button></li>)}
         </div>
 
 
