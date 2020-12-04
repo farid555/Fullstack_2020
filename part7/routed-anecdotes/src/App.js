@@ -68,9 +68,9 @@ const CreateNew = (props) => {
   //const [content, setContent] = useState('')
   //const [author, setAuthor] = useState('')
   //const [info, setInfo] = useState('')
-  const content = useField('text')
-  const author = useState('text')
-  const info = useState('text')
+  const { resetField: contentReset, ...content } = useField('text')
+  const { resetField: authorReset, ...author } = useField('text')
+  const { resetField: infoReset, ...info } = useField('text')
   const history = useHistory()
   clearTimeout(timeoutID)
 
@@ -86,9 +86,9 @@ const CreateNew = (props) => {
     history.push('/')
   }
   const resetAll = () => {
-    content.reset()
-    author.reset()
-    info.reset()
+    contentReset()
+    authorReset()
+    infoReset()
   }
 
 
@@ -109,7 +109,7 @@ const CreateNew = (props) => {
           <input {...info} name='info' />
         </div>
         <button>create</button>
-        <button type="button" onClick={resetAll}>reset</button>
+        <button type="reset" onClick={resetAll}>reset</button>
       </form>
     </div>
   )
