@@ -1,0 +1,12 @@
+
+
+
+
+POST http://localhost:3001/api/users
+Content-Type: application/json
+
+{
+   "username": "Farid25",
+    "name": "Fullstack",
+    "password": "farid333"
+}
