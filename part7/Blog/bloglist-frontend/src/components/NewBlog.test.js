@@ -38,4 +38,4 @@ describe('NewBlog', () => {
 
         expect(createBlog.mock.calls[0][0]).toEqual(blogData)
     })
-})
+}) 
