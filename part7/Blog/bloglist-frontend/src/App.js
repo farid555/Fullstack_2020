@@ -5,7 +5,7 @@ import Togglable from './components/Togglable'
 import NewBlog from './components/NewBlog'
 import blogService from './services/blogs'
 
-
+// From exrcise 7.13 to 7.18 works... 
 //import blogService from './services/blogs'
 import loginService from './services/login'
 import storage from './utils/storage'
@@ -124,7 +124,6 @@ const App = () => {
       dispatch(removeBlog(blogToRemove.id))
       notifyWith(`Deleted blog ${blogToRemove.title} by ${blogToRemove.author}`)
     }
-    //notifyWith(`Deleted blog ${blogToRemove.title} by ${blogToRemove.author}`)
   }
 
   const handleLogout = () => {
